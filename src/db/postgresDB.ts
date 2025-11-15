@@ -33,7 +33,6 @@ function createUserPool(): Pool {
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
   };
-  console.log(config)
 
   return new Pool(config);
 }

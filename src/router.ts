@@ -1,9 +1,11 @@
 import express, { Router } from "express";
 import { contextService } from "./services/context.service";
 import { v4 as uuid } from "uuid";
+import { serve, setup } from "swagger-ui-express"
 //Controllers
 import * as notificationController from "./controller/notifications.controller";
 import { validateNotificationDeleteRequest, validateNotificationGetRequest, validateNotificationPostRequest, validateNotificationPutRequest, validateNotificationsGetRequest } from "./middlwares/notifications.validation.middlware";
+import { openApiDocument } from "./docs/registry";
 
 
 export const router: Router = express.Router();
@@ -20,6 +22,8 @@ router.use((req, res, next) => {
   }
   next();
 });
+
+router.use("/docs", serve, setup(openApiDocument));
 
 //Notifications Routes
 router.get("/notifications", [validateNotificationsGetRequest], notificationController.getRegistrations)
