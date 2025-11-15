@@ -10,18 +10,6 @@ let wss: WebSocketServer | null = null;
 export function initializeWebSocket(server: HTTPServer) {
   wss = new WebSocketServer({ server, path: "/ws/notifications" });
 
-  wss.on("connection", (ws: WebSocket) => {
-    logger.info("New WebSocket client connected");
-
-    ws.on("close", () => {
-      logger.info("WebSocket client disconnected");
-    });
-
-    ws.on("error", (error: Error) => {
-      logger.error("WebSocket error:", error);
-    });
-  });
-
   logger.info("WebSocket server initialized on /ws/notifications");
 }
 
