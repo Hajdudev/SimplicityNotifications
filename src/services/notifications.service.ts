@@ -11,6 +11,7 @@ import {
 import { NotificationsCategory } from "../db/tables/notification.table";
 import { InternalServerError, NotFoundError } from "../utils/errors";
 import { excludePropertyFromObjects } from "../utils/utils";
+import { broadcastNewNotification } from "./websocket.service";
 
 export async function handleGetNotifications({
   size = 10,
@@ -56,6 +57,7 @@ export async function handlePostNotification(
     throw new InternalServerError("Failed to create notification");
   }
 
+  broadcastNewNotification(created);
   return created;
 }
 

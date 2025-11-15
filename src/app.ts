@@ -13,6 +13,8 @@ import rateLimit from "express-rate-limit";
 import { LoggerService } from "./utils/LoggerService";
 import { getPort } from "./utils/utils";
 import { errorHandler } from "./controller/error.controller";
+import { initializeWebSocket } from "./services/websocket.service";
+import { createServer } from "http";
 
 const app: Express = express();
 const port = getPort();
@@ -66,6 +68,10 @@ app.use("/", router);
 // error handler
 app.use(errorHandler);
 
-app.listen(port, () => {
+const server = createServer(app);
+
+initializeWebSocket(server);
+
+server.listen(port, () => {
   logger.info(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
