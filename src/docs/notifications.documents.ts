@@ -133,4 +133,39 @@ export function registerNotificationsEndpoints(registry: OpenAPIRegistry) {
       },
     },
   });
+
+  registry.registerPath({
+    method: "get",
+    path: "/ws/notifications",
+    summary: "WebSocket connection for real-time notifications",
+    description: `
+      Connect to this WebSocket endpoint to receive real-time notifications when new notifications are created.
+      
+      **Connection URL:** \`ws://localhost:3000/ws/notifications\`
+      
+      **Message Format:**
+      \`\`\`json
+      {
+        "type": "NEW_NOTIFICATION",
+        "data": {
+          "id": 42,
+          "title": "Emergency Alert",
+          "content": "Road closure on Main Street",
+          "category": "emergencies",
+          "created": 1753749030986,
+          "updated": 1753749030986
+        }
+      }
+      \`\`\`
+    `,
+    tags: ["Notifications", "WebSocket"],
+    responses: {
+      101: {
+        description: "Switching Protocols - WebSocket connection established",
+      },
+      404: {
+        description: "WebSocket endpoint not found",
+      },
+    },
+  });
 }
