@@ -3,6 +3,7 @@ import { DatabaseSchema } from "..";
 import { UserStatus } from "../tables/users.table";
 
 export async function up(db: Kysely<DatabaseSchema>): Promise<void> {
+  await db.schema.createType("user_status").asEnum(Object.values(UserStatus)).execute();
   await db.schema
     .createTable("users")
     .addColumn("id", "serial", (col) => col.primaryKey())

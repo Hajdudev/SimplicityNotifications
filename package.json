@@ -30,6 +30,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.1.0",
     "@types/cors": "^2.8.19",
     "@types/pg": "^8.15.6",
     "cors": "^2.8.5",
@@ -40,6 +41,8 @@
     "pg": "^8.16.3",
     "tsx": "^4.20.6",
     "uuid": "^13.0.0",
-    "winston": "^3.18.3"
+    "winston": "^3.18.3",
+    "zod": "^4.1.12",
+    "zod-validation-error": "^5.0.0"
   }
 }
