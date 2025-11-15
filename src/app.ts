@@ -1,3 +1,9 @@
+import dotenv from "dotenv";
+
+const dotEnvFile =
+  process.env.ENVIRONMENT === "prod" ? ".env.prod" : process.env.ENVIRONMENT === "dev" ? ".env.dev" : ".env.local";
+dotenv.config({ path: dotEnvFile });
+
 import express, { Express } from "express";
 import helmet from "helmet";
 import cors from "cors";

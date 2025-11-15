@@ -17,5 +17,7 @@ export async function up(db: Kysely<DatabaseSchema>): Promise<void> {
 }
 
 export async function down(db: Kysely<DatabaseSchema>): Promise<void> {
-  await db.schema.dropTable("notifications").execute();
+  await db.schema.dropTable("users").execute();
+  await db.schema.dropType("user_status").execute()
 }
+

@@ -1,19 +1,14 @@
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi";
 import z from "zod";
-import { idParamsSchema, listQuerySchema } from "./common.request.schema";
+import { listQuerySchema } from "./common.request.schema";
 import { NotificationsCategory } from "../../db/tables/notification.table";
 
 
 extendZodWithOpenApi(z);
 export const notificationsGetRequestSchema = listQuerySchema.extend({
   category: z
-    .preprocess(
-      (val) => {
-        if (typeof val === "string") return [val];
-        return val;
-      },
-      z.array(z.enum(NotificationsCategory)).optional()
-    )
+    .enum(NotificationsCategory)
+    .optional()
     .openapi({ example: Object.values(NotificationsCategory)[0] }),
 });
 export type NotificationsGetType = z.infer<typeof notificationsGetRequestSchema>;

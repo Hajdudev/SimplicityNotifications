@@ -26,3 +26,21 @@ export const getEnvironment = (): string => {
 export const getPort = (): number => {
   return parseInt(getEnvVarCachedOrDefault("PORT", "3000"));
 };
+
+/**
+ * Exclude a specific property from all objects in array
+ * @param arr - The array of objects to process
+ * @param key - The key of the property to exclude
+ * @returns A new array of objects with the specified property excluded
+ */
+export const excludePropertyFromObjects = <T extends object, K extends keyof T>(arr: T[], key: K): Omit<T, K>[] => {
+  return arr.map((item) => {
+    const itemRes: T = {} as T;
+    Object.keys(item).forEach((itemKey) => {
+      if (itemKey !== key) {
+        (itemRes as T)[itemKey as keyof T] = item[itemKey as keyof T];
+      }
+    });
+    return itemRes;
+  });
+};
