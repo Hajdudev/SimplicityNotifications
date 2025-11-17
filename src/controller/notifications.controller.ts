@@ -23,8 +23,8 @@ export const getRegistrations = async (
   if (!req.validatedQuery) {
     throw new InternalServerError("Missing validated query");
   }
-  const { size, category, page } = req.validatedQuery;
-  const result = await handleGetNotifications({ size, page, category });
+  const { size, category, page, content_contains, title_contains } = req.validatedQuery;
+  const result = await handleGetNotifications({ size, page, category, content_contains, title_contains });
   res.json(result);
 
   return;

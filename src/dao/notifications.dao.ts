@@ -21,11 +21,15 @@ export type NotificationWithTotal = SelectableNotifications & {
 export async function getNotifications({
   size,
   offset,
-  category
+  category,
+  content_contains,
+  title_contains
 }: {
   size: number;
   offset: number;
   category?: NotificationsCategory;
+  content_contains?: string;
+  title_contains?: string;
 }): Promise<NotificationWithTotal[]> {
   const db = getUserDb();
 
@@ -34,11 +38,21 @@ export async function getNotifications({
   if (category !== undefined) {
     query = query.where("category", "=", category);
   }
+  if (content_contains) {
+    query = query.where("content", "ilike", `%${content_contains}%`);
+  }
+
+  if (title_contains) {
+    if (title_contains) {
+      query = query.where("title", "ilike", `%${title_contains}%`);
+    }
+  }
+
 
   return await query
     .selectAll()
     .select(db.fn.countAll().over().as("total"))
-    .orderBy("created", "desc") // Most recent first
+    .orderBy("created", "desc")
     .limit(size)
     .offset(offset)
     .execute();

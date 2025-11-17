@@ -10,6 +10,8 @@ export const notificationsGetRequestSchema = listQuerySchema.extend({
     .enum(NotificationsCategory)
     .optional()
     .openapi({ example: Object.values(NotificationsCategory)[0] }),
+  title_contains: z.string().optional().openapi({ example: "Meeting tomorrow" }),
+  content_contains: z.string().optional().openapi({ example: "Important client updates" })
 });
 export type NotificationsGetType = z.infer<typeof notificationsGetRequestSchema>;
 

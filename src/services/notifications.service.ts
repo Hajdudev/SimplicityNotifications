@@ -17,15 +17,19 @@ export async function handleGetNotifications({
   size = 10,
   page,
   category,
+  content_contains,
+  title_contains,
 }: {
   size?: number;
   page?: number;
   category?: NotificationsCategory;
+  content_contains?: string;
+  title_contains?: string;
 }) {
   const currentPage = page && page > 0 ? page : 1;
   const offset = (currentPage - 1) * size;
 
-  const notificationsWithTotal = await getNotifications({ size, offset, category });
+  const notificationsWithTotal = await getNotifications({ size, offset, category, content_contains, title_contains });
 
   const total = notificationsWithTotal.length > 0 ? Number(notificationsWithTotal[0].total) : 0;
   const notifications = excludePropertyFromObjects(notificationsWithTotal, "total");
